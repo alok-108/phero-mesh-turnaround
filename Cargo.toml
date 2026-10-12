@@ -1,0 +1,5 @@
+[workspace]
+members = [
+    "crates/ramp-math-core",
+]
+resolver = "2"
