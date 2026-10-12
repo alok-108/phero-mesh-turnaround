@@ -1,5 +1,6 @@
 # PHERO-MESH — Airport Ramp Turnaround Mathematical Swarm OS
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Online%20(GitHub%20Pages)-06B6D4?style=for-the-badge&logo=github)](https://alok-108.github.io/phero-mesh-turnaround/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Rust: WASM](https://img.shields.io/badge/Rust-WASM-orange.svg)](https://www.rust-lang.org/)
 [![React 19](https://img.shields.io/badge/React-19-blue.svg)](https://react.dev/)
@@ -10,7 +11,8 @@
 
 By pairing **Rust compiled to WebAssembly (WASM)**, **biological stigmergy (pheromone diffusion)**, and a **28-byte binary mesh protocol**, PHERO-MESH achieves sub-4ms local turn recalculation—completely eliminating cloud latency, recurring API token fees, and probabilistic LLM hallucinations.
 
-📖 **Comprehensive User & Operator Guide:** [**USER_MANUAL.md**](USER_MANUAL.md)
+🌐 **Live Deployment:** [**https://alok-108.github.io/phero-mesh-turnaround/**](https://alok-108.github.io/phero-mesh-turnaround/)  
+📖 **Comprehensive User & Operator Manual:** [**USER_MANUAL.md**](USER_MANUAL.md)
 
 ---
 
@@ -69,12 +71,13 @@ phero-mesh-turnaround/
 │           └── styles/
 │               └── index.css           # Avionics dark HUD tokens & glassmorphism
 ├── docs/
+│   ├── USER_MANUAL.md                  # Comprehensive operator manual
 │   └── screenshots/                    # High-resolution simulation screenshots
 ├── deploy/
 │   ├── vercel.json                     # Vercel MIME types (application/wasm) & COOP/COEP headers
 │   ├── build.sh                        # One-command Unix build pipeline
 │   └── build.ps1                       # One-command Windows PowerShell build pipeline
-└── USER_MANUAL.md                      # Detailed operator handbook
+└── USER_MANUAL.md                      # Root documentation handbook
 ```
 
 ---
