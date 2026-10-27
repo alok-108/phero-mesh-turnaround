@@ -3,6 +3,9 @@ name = "ramp-math-core"
 version = "0.1.0"
 edition = "2021"
 description = "Deterministic zero-cloud mathematical turnaround swarm core in WebAssembly"
+license = "MIT"
+repository = "https://github.com/alok-108/phero-mesh-turnaround"
+authors = ["Alok Kumar"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]
@@ -12,9 +15,3 @@ wasm-bindgen = "0.2"
 nalgebra = { version = "0.33", default-features = false, features = ["std", "alloc"] }
 petgraph = { version = "0.6", default-features = false, features = ["graphmap"] }
 console_error_panic_hook = { version = "0.1", optional = true }
-
-[profile.release]
-opt-level = 3
-lto = true
-codegen-units = 1
-panic = "abort"

@@ -1,18 +1,31 @@
 # PHERO-MESH — Airport Ramp Turnaround Mathematical Swarm OS
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Online%20(GitHub%20Pages)-06B6D4?style=for-the-badge&logo=github)](https://alok-108.github.io/phero-mesh-turnaround/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![CI Test Suite](https://github.com/alok-108/phero-mesh-turnaround/actions/workflows/ci.yml/badge.svg)](https://github.com/alok-108/phero-mesh-turnaround/actions/workflows/ci.yml)
 [![Rust: WASM](https://img.shields.io/badge/Rust-WASM-orange.svg)](https://www.rust-lang.org/)
-[![React 19](https://img.shields.io/badge/React-19-blue.svg)](https://react.dev/)
-[![BroadcastChannel: 28B Binary](https://img.shields.io/badge/Mesh-28B%20Binary-cyan.svg)](#-28-byte-binary-mesh-protocol-swarm-busts)
+[![JOSS Paper](https://img.shields.io/badge/JOSS-paper.md-blue.svg)](paper/paper.md)
 [![Zero-Cloud Deterministic](https://img.shields.io/badge/Compute-Zero--Cloud%20Deterministic-emerald.svg)](#-benchmark-phero-mesh-wasm-vs-traditional-cloud-llm)
 
-**PHERO-MESH** is a zero-cloud, deterministic mathematical multi-client agent swarm operating Airbus A320 45-minute aircraft turnarounds.
+**PHERO-MESH** is an open-source, zero-cloud, deterministic mathematical multi-agent edge swarm coordination engine for Airbus A320 commercial aircraft turnarounds.
 
-By pairing **Rust compiled to WebAssembly (WASM)**, **biological stigmergy (pheromone diffusion)**, and a **28-byte binary mesh protocol**, PHERO-MESH achieves sub-4ms local turn recalculation—completely eliminating cloud latency, recurring API token fees, and probabilistic LLM hallucinations.
+By pairing **Rust compiled to WebAssembly (WASM)**, **biological stigmergy (pheromone diffusion)**, **Graph Laplacian continuous spectral diffusion**, and a **28-byte binary mesh protocol**, PHERO-MESH achieves sub-millisecond ($< 0.1\text{ ms}$) deterministic turn schedule recalculation—completely eliminating cloud dependency, recurring API token fees, network dropouts, and probabilistic LLM hallucinations.
 
 🌐 **Live Deployment:** [**https://alok-108.github.io/phero-mesh-turnaround/**](https://alok-108.github.io/phero-mesh-turnaround/)  
-📖 **Comprehensive User & Operator Manual:** [**USER_MANUAL.md**](USER_MANUAL.md)
+📖 **Comprehensive User & Operator Manual:** [**USER_MANUAL.md**](USER_MANUAL.md)  
+📄 **Academic Research Paper (JOSS):** [**paper/paper.md**](paper/paper.md)
+
+---
+
+## 🎯 Statement of Need
+
+Airport ramps present severe radio-frequency (RF) multipath reflections, electromagnetic interference from radar equipment, and pervasive wireless dead zones beneath metal aircraft fuselages. In this safety-critical operating environment, conventional centralized optimization architectures (e.g., cloud-hosted MILP solvers or emerging multi-agent LLMs) suffer from severe vulnerabilities:
+
+1. **Re-planning Latency:** Re-solving large combinatorial models on remote cloud clusters upon random ground equipment failures requires several seconds to minutes, stalling apron dispatch.
+2. **Single Point of Failure:** An apron Wi-Fi or 5G drop stalls centralized dispatch, forcing ground crews to revert to manual, uncoordinated radio calls.
+3. **Safety Non-Determinism in Generative AI:** Cloud LLM agent systems exhibit high round-trip latency ($15,000\text{--}25,000\text{ ms}$) and probabilistic hallucination risks that violate aviation regulatory standards established by the International Civil Aviation Organization (ICAO Doc 9157).
+
+`PHERO-MESH` solves this by executing entirely offline at the edge. Ground support equipment (GSE) units form a peer-to-peer mesh swarm, exchanging compact 28-byte binary stigmergic pulses to dynamically identify bottlenecks and execute deterministic recovery maneuvers in microseconds.
 
 ---
 
@@ -35,15 +48,28 @@ By pairing **Rust compiled to WebAssembly (WASM)**, **biological stigmergy (pher
 ```
 phero-mesh-turnaround/
 ├── Cargo.toml                          # Workspace root
+├── LICENSE                             # MIT Open Source License
+├── CITATION.cff                        # Machine-readable academic citation metadata
+├── CONTRIBUTING.md                     # Contribution guidelines and setup
+├── CODE_OF_CONDUCT.md                  # Contributor Covenant Code of Conduct
+├── paper/
+│   ├── paper.md                        # JOSS journal publication manuscript
+│   └── paper.bib                       # BibTeX academic references
+├── .github/
+│   └── workflows/
+│       ├── ci.yml                      # Automated test suite & compiler checks
+│       └── deploy.yml                  # Automated GitHub Pages production deployment
 ├── crates/
 │   └── ramp-math-core/                 # High-performance Rust WASM math engine
 │       ├── Cargo.toml
-│       └── src/
-│           ├── lib.rs                  # WASM bindings & zero-copy linear memory views
-│           ├── cpm.rs                  # Critical Path Method (Forward/Backward passes & Total Slack)
-│           ├── stigmergy.rs            # Evaporating pheromone matrix (tau) & edge decay
-│           ├── laplacian.rs            # Graph Laplacian heat diffusion & spectral bottleneck detection
-│           └── mdp_policy.rs           # Deterministic Markov Decision Process tactical action solver
+│       ├── src/
+│       │   ├── lib.rs                  # WASM bindings & zero-copy linear memory views
+│       │   ├── cpm.rs                  # Critical Path Method (Forward/Backward passes & Total Slack)
+│       │   ├── stigmergy.rs            # Evaporating pheromone matrix (tau) & edge decay
+│       │   ├── laplacian.rs            # Graph Laplacian heat diffusion & spectral bottleneck detection
+│       │   └── mdp_policy.rs           # Deterministic Markov Decision Process tactical action solver
+│       └── tests/
+│           └── swarm_core_tests.rs     # Automated unit, integration, and benchmark suite
 ├── packages/
 │   └── web-app/                        # React 19 + TypeScript + Vite + Tailwind CSS HUD
 │       ├── index.html
@@ -70,14 +96,9 @@ phero-mesh-turnaround/
 │           │   └── ChaosControlPanel.tsx# Chaos injection suite & comparative benchmark
 │           └── styles/
 │               └── index.css           # Avionics dark HUD tokens & glassmorphism
-├── docs/
-│   ├── USER_MANUAL.md                  # Comprehensive operator manual
-│   └── screenshots/                    # High-resolution simulation screenshots
-├── deploy/
-│   ├── vercel.json                     # Vercel MIME types (application/wasm) & COOP/COEP headers
-│   ├── build.sh                        # One-command Unix build pipeline
-│   └── build.ps1                       # One-command Windows PowerShell build pipeline
-└── USER_MANUAL.md                      # Root documentation handbook
+└── docs/
+    ├── USER_MANUAL.md                  # Comprehensive operator manual
+    └── screenshots/                    # High-resolution simulation screenshots
 ```
 
 ---
@@ -99,7 +120,7 @@ Coordinates the 12 ground handling services around an Airbus A320:
 - **10. Cargo Doors Closed** ($T = 5\text{m}$)
 - **11. Pushback Clearance** ($T = 5\text{m}$)
 
-Calculates Early Start ($ES$), Early Finish ($EF$), Late Start ($LS$), Late Finish ($LF$), and Total Slack ($TS = LS - ES$). Any path with $TS \le 0$ is dynamically tagged as the **Critical Path**.
+Calculates Early Start ($ES$), Early Finish ($EF$), Late Start ($LS$), Late Finish ($LF$), and Total Slack ($TS = LS - ES$). Any path with $TS \le 0.01$ is dynamically tagged as the **Critical Path**.
 
 ### 2. Biological Stigmergic Pheromone Diffusion (`stigmergy.rs`)
 Tracks delay momentum with a matrix $\tau \in \mathbb{R}^{12 \times 12}$:
@@ -108,8 +129,8 @@ Where evaporation rate $\rho = 0.05$. Pheromone trails glow visually on the canv
 
 ### 3. Graph Laplacian Heat Diffusion (`laplacian.rs`)
 Evaluates the graph Laplacian:
-$$L = D - (A + \tau)$$
-Simulates discrete heat diffusion $\frac{dh}{dt} = -\alpha L h + s$, projecting which downstream ground services will experience bottleneck choke points before they occur.
+$$L = D - (A + 0.2\boldsymbol{\tau})$$
+Simulates discrete heat diffusion $\mathbf{h}_{t+1} = \psi (\mathbf{h}_t - \alpha L \mathbf{h}_t) + \mathbf{s}_t$, projecting which downstream ground services will experience bottleneck choke points before they occur.
 
 ### 4. Deterministic MDP Safe Action Solver (`mdp_policy.rs`)
 Evaluates turnaround state deviations and constraints against strict ICAO safety regulations, returning optimal tactical actions in $< 0.1\text{ms}$ with zero probabilistic hallucinations:
@@ -139,14 +160,26 @@ Zero JSON serialization overhead. All browser tabs communicate via typed binary 
 
 ---
 
-## 🔒 Web Locks Master Election (`leader-lock.ts`)
+## 🧪 Automated Test Suite & Benchmarking
 
-Tabs use the Web Locks API:
-```typescript
-navigator.locks.request('ramp_swarm_master', async (lock) => {
-  // Elected Master Hub. If closed, a waiting shard tab is seamlessly promoted.
-});
+`PHERO-MESH` includes unit, integration, and benchmark tests verifying mathematical correctness, delay propagation, pheromone decay, Laplacian properties, and sub-millisecond execution.
+
+### Running Tests
+```bash
+# Run all tests in the workspace
+cargo test
+
+# Run tests with verbose benchmark timing output
+cargo test -- --nocapture
 ```
+
+The test suite validates:
+- `test_cpm_nominal_calculation`: Verifies forward and backward passes, early/late times, and critical path identification.
+- `test_cpm_delay_propagation`: Injects delays and verifies critical path propagation to the pushback sink node.
+- `test_stigmergy_deposition_and_decay`: Verifies directional pheromone deposit and temporal evaporation.
+- `test_laplacian_heat_diffusion`: Proves the Laplacian zero row-sum property ($\sum_j L_{ij} = 0$) and thermal diffusion.
+- `test_mdp_policy_solver_determinism`: Tests nominal vs disrupted ICAO safety decisions.
+- `test_full_swarm_core_e2e_and_sub_millisecond_benchmark`: Verifies end-to-end memory buffers and asserts execution time $< 1\text{ ms}$ ($< 100\ \mu\text{s}$ per cycle).
 
 ---
 
@@ -161,6 +194,9 @@ navigator.locks.request('ramp_swarm_master', async (lock) => {
 ```bash
 # Navigate to web app
 cd packages/web-app
+
+# Install dependencies
+npm install
 
 # Run development server
 npm run dev
@@ -199,5 +235,29 @@ bash deploy/build.sh
 
 ---
 
+## 📜 Citation
+
+If you use `PHERO-MESH` in your research, please cite our software:
+
+```bibtex
+@software{kumar2026pheromesh,
+  author = {Kumar, Alok},
+  title = {PHERO-MESH: Deterministic Edge Swarm Coordination for Aircraft Turnarounds via Biological Stigmergy and WebAssembly},
+  url = {https://github.com/alok-108/phero-mesh-turnaround},
+  year = {2026},
+  publisher = {Journal of Open Source Software}
+}
+```
+
+---
+
+## 🤝 Contributing & Community
+
+Contributions are welcomed! Please review:
+- [CONTRIBUTING.md](CONTRIBUTING.md) for local development workflows and pull request criteria.
+- [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for community standards.
+
+---
+
 ## 📄 License
-MIT License. Commercial Aviation Turnaround & Airport Apron Coordination Systems.
+This project is licensed under the [MIT License](LICENSE).

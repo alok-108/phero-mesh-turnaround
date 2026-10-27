@@ -1,10 +1,10 @@
 use std::sync::Mutex;
 use wasm_bindgen::prelude::*;
 
-mod cpm;
-mod stigmergy;
-mod laplacian;
-mod mdp_policy;
+pub mod cpm;
+pub mod stigmergy;
+pub mod laplacian;
+pub mod mdp_policy;
 
 use cpm::{CpmEngine, MILESTONES, NUM_NODES, TARGET_TURNAROUND_MINUTES};
 use stigmergy::StigmergyMatrix;
@@ -16,12 +16,12 @@ const BUFFER_LEN: usize = NUM_NODES * NODE_STRIDE + 8; // 96 + 8 = 104 floats
 const MATRIX_LEN: usize = NUM_NODES * NUM_NODES;
 
 pub struct SwarmCore {
-    engine: CpmEngine,
-    stigmergy: StigmergyMatrix,
-    diffusion: LaplacianDiffusion,
-    zero_copy_buffer: [f32; BUFFER_LEN],
-    pheromone_buffer: [f32; MATRIX_LEN],
-    adjacency_buffer: [f32; MATRIX_LEN],
+    pub engine: CpmEngine,
+    pub stigmergy: StigmergyMatrix,
+    pub diffusion: LaplacianDiffusion,
+    pub zero_copy_buffer: [f32; BUFFER_LEN],
+    pub pheromone_buffer: [f32; MATRIX_LEN],
+    pub adjacency_buffer: [f32; MATRIX_LEN],
 }
 
 impl SwarmCore {
@@ -178,6 +178,16 @@ pub fn get_pheromone_matrix() -> *const f32 {
         core.pheromone_buffer.as_ptr()
     } else {
         std::ptr::null()
+    }
+}
+
+#[wasm_bindgen]
+pub fn get_edge_pheromone(u: usize, v: usize) -> f32 {
+    let lock = CORE.lock().unwrap();
+    if let Some(ref core) = *lock {
+        core.stigmergy.get_edge_weight(u, v)
+    } else {
+        0.0
     }
 }
 

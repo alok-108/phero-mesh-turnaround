@@ -140,13 +140,21 @@ impl MdpSolver {
             }
 
             // Safety penalty / constraint verification
-            let q_value = utility * action.safety_index;
+            let mut safety_factor = action.safety_index;
+
+            // ICAO Doc 9157 Refueling safety constraint:
+            // Concurrent refueling during passenger movement requires cabin doors open & emergency evacuation paths
+            if action.id == 4 && state.is_fueling_active && !state.is_cabin_door_open {
+                safety_factor *= 0.75; // Penalize if egress condition not satisfied
+            }
+
+            let q_value = utility * safety_factor;
 
             if q_value > max_q_value {
                 max_q_value = q_value;
                 best_action_id = action.id;
                 expected_recovery = action.nominal_recovery_min.min(target_delay.max(3.0));
-                safety_score = action.safety_index;
+                safety_score = safety_factor;
             }
         }
 
